@@ -1,0 +1,6549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DELLY'S | CONTROL TOWER EXECUTIVE</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+:root{
+    --bg:#050c15;
+    --panel:#0a1625;
+    --panel2:#0d1d30;
+    --panel3:#112944;
+
+    --line:#1b3855;
+
+    --text:#f2f7fc;
+    --muted:#8ea6bd;
+
+    --green:#31d69f;
+    --green2:#19a978;
+
+    --yellow:#f4c542;
+    --orange:#ff9345;
+    --red:#ff596b;
+
+    --blue:#4da3ff;
+    --cyan:#35d8e8;
+    --purple:#a477ff;
+
+    --shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+
+    background:
+        radial-gradient(
+            circle at 80% -10%,
+            rgba(45,125,210,.28),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 10% 100%,
+            rgba(20,130,120,.12),
+            transparent 28%
+        ),
+        var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+/* =========================================================
+APP
+========================================================= */
+
+.app{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    min-height:100vh;
+}
+
+/* =========================================================
+SIDEBAR
+========================================================= */
+
+.sidebar{
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4,12,22,.99),
+            rgba(6,16,28,.99)
+        );
+
+    border-right:1px solid var(--line);
+
+    padding:18px 13px;
+
+    position:sticky;
+    top:0;
+
+    height:100vh;
+
+    z-index:50;
+}
+
+.brand{
+
+    padding:
+        10px
+        12px
+        20px;
+
+    border-bottom:1px solid var(--line);
+
+    margin-bottom:15px;
+}
+
+.brand h1{
+
+    margin:0;
+
+    font-size:20px;
+
+    letter-spacing:.5px;
+}
+
+.brand h1 span{
+    color:var(--blue);
+}
+
+.brand p{
+
+    margin:7px 0 0;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    letter-spacing:1.4px;
+}
+
+.nav{
+
+    padding:12px 13px;
+
+    margin:5px 0;
+
+    border-radius:10px;
+
+    color:var(--muted);
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    transition:.2s;
+
+    border-left:3px solid transparent;
+}
+
+.nav:hover{
+
+    background:#0d2238;
+
+    color:white;
+
+    transform:translateX(2px);
+}
+
+.nav.active{
+
+    background:
+        linear-gradient(
+            90deg,
+            #102d49,
+            #0c2035
+        );
+
+    color:white;
+
+    border-left-color:var(--blue);
+}
+
+/* =========================================================
+MAIN
+========================================================= */
+
+.main{
+
+    padding:22px;
+
+    min-width:0;
+}
+
+/* =========================================================
+TOPBAR
+========================================================= */
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:18px;
+
+    margin-bottom:18px;
+}
+
+.title h2{
+
+    margin:0;
+
+    font-size:28px;
+}
+
+.title p{
+
+    margin:6px 0;
+
+    color:var(--muted);
+
+    font-size:13px;
+}
+
+.actions{
+
+    display:flex;
+
+    gap:8px;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+
+    border:1px solid var(--line);
+
+    background:#10243b;
+
+    color:white;
+
+    padding:10px 14px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+
+    font-weight:800;
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+.btn:hover{
+
+    background:#173653;
+
+    transform:translateY(-1px);
+}
+
+.btn.primary{
+
+    background:var(--blue);
+
+    color:#061321;
+
+    border-color:transparent;
+}
+
+.btn.success{
+
+    background:#123d34;
+
+    color:#73e5c4;
+}
+
+.btn.danger{
+
+    background:#421d29;
+
+    color:#ff9aa6;
+}
+
+.live{
+
+    font-size:10px;
+
+    color:var(--yellow);
+
+    font-weight:900;
+
+    padding:10px 12px;
+
+    border:1px solid var(--line);
+
+    border-radius:9px;
+
+    background:#091827;
+}
+
+/* =========================================================
+FILTERS
+========================================================= */
+
+.filters{
+
+    display:grid;
+
+    grid-template-columns:
+        2fr
+        repeat(7,1fr);
+
+    gap:8px;
+
+    background:
+        rgba(10,23,38,.94);
+
+    padding:11px;
+
+    border:1px solid var(--line);
+
+    border-radius:13px;
+
+    margin-bottom:18px;
+
+    box-shadow:var(--shadow);
+}
+
+input,
+select{
+
+    background:#071522;
+
+    border:1px solid var(--line);
+
+    border-radius:8px;
+
+    color:var(--text);
+
+    padding:10px;
+
+    width:100%;
+
+    outline:none;
+
+    font-size:11px;
+}
+
+input:focus,
+select:focus{
+
+    border-color:var(--blue);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(77,163,255,.08);
+}
+
+/* =========================================================
+SECTION
+========================================================= */
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+/* =========================================================
+SECTION TITLE
+========================================================= */
+
+.section-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin:22px 0 11px;
+}
+
+.section-title h3{
+
+    margin:0;
+
+    font-size:16px;
+}
+
+.section-title small{
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+/* =========================================================
+KPI
+========================================================= */
+
+.kpis{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,1fr);
+
+    gap:10px;
+}
+
+.kpi{
+
+    background:
+        linear-gradient(
+            145deg,
+            #0e2238,
+            #081522
+        );
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    padding:14px;
+
+    min-height:115px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.15);
+}
+
+.kpi::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-25px;
+    bottom:-35px;
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    background:
+        rgba(77,163,255,.07);
+}
+
+.kpi .label{
+
+    font-size:9px;
+
+    color:var(--muted);
+
+    font-weight:900;
+
+    letter-spacing:.7px;
+}
+
+.kpi .value{
+
+    font-size:22px;
+
+    font-weight:900;
+
+    margin-top:11px;
+}
+
+.kpi .sub{
+
+    font-size:10px;
+
+    color:var(--muted);
+
+    margin-top:6px;
+}
+
+.kpi.good{
+    border-top:3px solid var(--green);
+}
+
+.kpi.warning{
+    border-top:3px solid var(--yellow);
+}
+
+.kpi.danger{
+    border-top:3px solid var(--red);
+}
+
+.kpi.info{
+    border-top:3px solid var(--blue);
+}
+
+/* =========================================================
+ALERTS
+========================================================= */
+
+.alert-strip{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:10px;
+}
+
+.alert{
+
+    background:var(--panel);
+
+    border:1px solid var(--line);
+
+    border-radius:11px;
+
+    padding:13px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.15);
+}
+
+.alert span{
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+.alert b{
+
+    display:block;
+
+    margin-top:6px;
+
+    font-size:23px;
+}
+
+.critical{
+    border-left:4px solid var(--red);
+}
+
+.warning{
+    border-left:4px solid var(--orange);
+}
+
+.attention{
+    border-left:4px solid var(--yellow);
+}
+
+.success{
+    border-left:4px solid var(--green);
+}
+
+.info-alert{
+    border-left:4px solid var(--blue);
+}
+
+/* =========================================================
+GRIDS
+========================================================= */
+
+.grid2{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:13px;
+}
+
+.grid3{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:13px;
+}
+
+.grid4{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:13px;
+}
+
+/* =========================================================
+PANEL
+========================================================= */
+
+.panel{
+
+    background:
+        rgba(10,24,40,.95);
+
+    border:1px solid var(--line);
+
+    border-radius:13px;
+
+    padding:15px;
+
+    min-width:0;
+
+    box-shadow:
+        0 7px 25px rgba(0,0,0,.15);
+}
+
+.panel h4{
+
+    margin:
+        0
+        0
+        12px;
+
+    font-size:13px;
+}
+
+/* =========================================================
+CHART
+========================================================= */
+
+.chartbox{
+
+    height:300px;
+
+    position:relative;
+}
+
+.chartbox.small{
+    height:230px;
+}
+
+.chartbox.tall{
+    height:350px;
+}
+
+/* =========================================================
+SLA
+========================================================= */
+
+.sla-panel{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.sla-gauge{
+
+    width:100%;
+
+    height:250px;
+
+    position:relative;
+}
+
+.sla-center{
+
+    position:absolute;
+
+    left:50%;
+
+    top:62%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    text-align:center;
+
+    pointer-events:none;
+}
+
+.sla-center strong{
+
+    display:block;
+
+    font-size:38px;
+
+    font-weight:900;
+}
+
+.sla-center span{
+
+    display:block;
+
+    margin-top:4px;
+
+    font-size:10px;
+
+    color:var(--muted);
+}
+
+.sla-status{
+
+    font-size:11px;
+
+    font-weight:900;
+
+    padding:7px 14px;
+
+    border-radius:99px;
+
+    background:#153657;
+}
+
+/* =========================================================
+META
+========================================================= */
+
+.target-box{
+
+    margin-top:8px;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:10px;
+
+    color:var(--muted);
+}
+
+.target-box strong{
+    color:var(--text);
+}
+
+/* =========================================================
+INSIGHTS
+========================================================= */
+
+.insight{
+
+    display:flex;
+
+    gap:10px;
+
+    align-items:flex-start;
+
+    padding:11px 0;
+
+    border-bottom:1px solid var(--line);
+}
+
+.insight:last-child{
+    border-bottom:0;
+}
+
+.insight-icon{
+
+    min-width:32px;
+
+    height:32px;
+
+    border-radius:9px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#102d49;
+
+    font-size:15px;
+}
+
+.insight-content b{
+
+    display:block;
+
+    font-size:11px;
+}
+
+.insight-content span{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+/* =========================================================
+PROGRESS
+========================================================= */
+
+.progress-line{
+
+    height:8px;
+
+    background:#142b42;
+
+    border-radius:99px;
+
+    overflow:hidden;
+
+    margin-top:7px;
+}
+
+.progress-line i{
+
+    display:block;
+
+    height:100%;
+
+    width:0%;
+
+    background:var(--blue);
+
+    transition:.4s;
+}
+
+/* =========================================================
+RISK
+========================================================= */
+
+.risk-list{
+
+    max-height:410px;
+
+    overflow:auto;
+}
+
+.risk{
+
+    display:grid;
+
+    grid-template-columns:
+        42px
+        1fr
+        auto;
+
+    gap:9px;
+
+    align-items:center;
+
+    padding:10px 0;
+
+    border-bottom:1px solid var(--line);
+}
+
+.score{
+
+    font-size:18px;
+
+    font-weight:900;
+}
+
+.risk small{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:4px 8px;
+
+    border-radius:99px;
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+.b-red{
+
+    background:#4a1d2a;
+
+    color:#ff9ba7;
+}
+
+.b-yellow{
+
+    background:#4c3d16;
+
+    color:#ffe082;
+}
+
+.b-green{
+
+    background:#103b34;
+
+    color:#7ee8c5;
+}
+
+.b-blue{
+
+    background:#153657;
+
+    color:#8cc7ff;
+}
+
+/* =========================================================
+TABLE
+========================================================= */
+
+.tablewrap{
+
+    max-height:540px;
+
+    overflow:auto;
+
+    border:1px solid var(--line);
+
+    border-radius:9px;
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    font-size:10px;
+}
+
+th{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:3;
+
+    background:#10243b;
+
+    color:#c4d7e9;
+
+    text-align:left;
+
+    padding:10px;
+
+    white-space:nowrap;
+}
+
+td{
+
+    padding:9px;
+
+    border-top:1px solid #172d44;
+
+    white-space:nowrap;
+}
+
+tr:hover{
+
+    background:#10243b;
+}
+
+/* =========================================================
+STATUS PILL
+========================================================= */
+
+.status-pill{
+
+    padding:
+        4px
+        8px;
+
+    border-radius:99px;
+
+    font-size:9px;
+
+    font-weight:900;
+}
+
+/* =========================================================
+EXECUTIVE SCORE
+========================================================= */
+
+.exec-score{
+
+    text-align:center;
+
+    padding:18px;
+}
+
+.exec-score .big{
+
+    font-size:48px;
+
+    font-weight:900;
+
+    line-height:1;
+}
+
+.exec-score .label{
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+/* =========================================================
+DIAGNOSTIC
+========================================================= */
+
+.diag{
+
+    font:
+        11px
+        Consolas,
+        monospace;
+
+    max-height:600px;
+
+    overflow:auto;
+
+    background:#040b13;
+
+    border:1px solid var(--line);
+
+    padding:12px;
+
+    border-radius:9px;
+
+    line-height:1.8;
+}
+
+.ok{
+    color:#71e5be;
+}
+
+.err{
+    color:#ff8996;
+}
+
+.info{
+    color:#a7c6e8;
+}
+
+.warn{
+    color:#ffe082;
+}
+
+.progress{
+
+    height:8px;
+
+    background:#152b42;
+
+    border-radius:99px;
+
+    overflow:hidden;
+
+    margin-bottom:12px;
+}
+
+.progress i{
+
+    display:block;
+
+    width:0%;
+
+    height:100%;
+
+    background:var(--blue);
+
+    transition:.3s;
+}
+
+/* =========================================================
+EMPTY
+========================================================= */
+
+.empty{
+
+    color:var(--muted);
+
+    text-align:center;
+
+    padding:30px;
+}
+
+/* =========================================================
+RESPONSIVE
+========================================================= */
+
+@media(max-width:1450px){
+
+    .filters{
+        grid-template-columns:
+            repeat(4,1fr);
+    }
+
+    .kpis{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+}
+
+@media(max-width:1100px){
+
+    .grid4{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .grid3{
+        grid-template-columns:
+            1fr 1fr;
+    }
+}
+
+@media(max-width:850px){
+
+    .app{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+
+        position:relative;
+
+        height:auto;
+
+        display:flex;
+
+        overflow:auto;
+
+        padding:8px;
+    }
+
+    .brand{
+
+        min-width:210px;
+
+        border:0;
+
+        margin:0;
+    }
+
+    .nav{
+        white-space:nowrap;
+    }
+
+    .main{
+        padding:12px;
+    }
+
+    .topbar{
+        flex-direction:column;
+    }
+
+    .grid2,
+    .grid3,
+    .grid4{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    .filters,
+    .kpis,
+    .alert-strip{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =========================================================
+SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+<div class="brand">
+
+<h1>
+DELLY'S
+<span>CONTROL TOWER</span>
+</h1>
+
+<p>
+MONITORAMENTO OPERACIONAL EXECUTIVO
+</p>
+
+</div>
+
+<div class="nav active" data-page="tower">
+🛰️ Torre Executiva
+</div>
+
+<div class="nav" data-page="performance">
+📈 Performance & SLA
+</div>
+
+<div class="nav" data-page="risk">
+🚨 Central de Riscos
+</div>
+
+<div class="nav" data-page="partners">
+🚚 Parceiros & Motoristas
+</div>
+
+<div class="nav" data-page="occurrences">
+⚠️ Ocorrências
+</div>
+
+<div class="nav" data-page="data">
+🗂️ Base Operacional
+</div>
+
+<div class="nav" data-page="diagnostic">
+🔧 Diagnóstico
+</div>
+
+</aside>
+
+<main class="main">
+
+<!-- =========================================================
+TOPBAR
+========================================================= -->
+
+<div class="topbar">
+
+<div class="title">
+
+<h2 id="pageTitle">
+Torre Executiva
+</h2>
+
+<p id="subtitle">
+Visão gerencial da operação logística.
+</p>
+
+</div>
+
+<div class="actions">
+
+<span class="live" id="live">
+● AGUARDANDO BASE
+</span>
+
+<label class="btn primary" for="file">
+📂 CARREGAR PLANILHA
+</label>
+
+<input
+id="file"
+type="file"
+accept=".xlsx,.xls,.xlsm"
+hidden
+>
+
+<button
+class="btn"
+id="clearFilters"
+>
+🧹 LIMPAR FILTROS
+</button>
+
+<button
+class="btn"
+id="fullscreen"
+>
+⛶ TELA CHEIA
+</button>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+FILTROS
+========================================================= -->
+
+<div class="filters">
+
+<input
+id="search"
+placeholder="🔎 NF, cidade, destino, motorista..."
+>
+
+<select id="fStatus">
+<option value="">Todos os status</option>
+</select>
+
+<select id="fUF">
+<option value="">Todas as UFs</option>
+</select>
+
+<select id="fPartner">
+<option value="">Todos os parceiros</option>
+</select>
+
+<select id="fDriver">
+<option value="">Todos os motoristas</option>
+</select>
+
+<select id="fCity">
+<option value="">Todas as cidades</option>
+</select>
+
+<select id="fDestination">
+<option value="">Todos os destinos</option>
+</select>
+
+<select id="fManifest">
+<option value="">Todos os manifestos</option>
+</select>
+
+</div>
+
+<!-- =========================================================
+TORRE
+========================================================= -->
+
+<section id="tower" class="section active">
+
+<div class="alert-strip" id="alerts"></div>
+
+<div class="section-title">
+
+<h3>
+📊 Visão Executiva
+</h3>
+
+<small id="countInfo">
+0 registros
+</small>
+
+</div>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="section-title">
+
+<h3>
+🎯 SLA OPERACIONAL
+</h3>
+
+<small>
+Meta gerencial: 95%
+</small>
+
+</div>
+
+<div class="grid3">
+
+<!-- SLA -->
+
+<div class="panel sla-panel">
+
+<h4>
+SLA GLOBAL
+</h4>
+
+<div class="sla-gauge">
+
+<canvas id="chartSLA"></canvas>
+
+<div class="sla-center">
+
+<strong id="slaValue">
+0%
+</strong>
+
+<span>
+SLA ATUAL
+</span>
+
+</div>
+
+</div>
+
+<div
+class="sla-status"
+id="slaStatus"
+>
+AGUARDANDO BASE
+</div>
+
+<div class="target-box">
+
+<span>
+Meta
+</span>
+
+<strong>
+95%
+</strong>
+
+<span id="slaGap">
+-
+</span>
+
+</div>
+
+</div>
+
+<!-- SLA META -->
+
+<div class="panel">
+
+<h4>
+🎯 SLA x META
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartSLATarget"></canvas>
+
+</div>
+
+</div>
+
+<!-- STATUS -->
+
+<div class="panel">
+
+<h4>
+📊 Status da Operação
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartStatus"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+INSIGHTS
+========================================================= -->
+
+<div class="section-title">
+
+<h3>
+💡 Leitura Executiva
+</h3>
+
+<small>
+Insights calculados automaticamente
+</small>
+
+</div>
+
+<div class="grid2">
+
+<div class="panel">
+
+<h4>
+📌 O que o diretor precisa saber
+</h4>
+
+<div id="insights"></div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+💰 Exposição Financeira
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartFinancial"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+EVOLUÇÃO
+========================================================= -->
+
+<div class="section-title">
+
+<h3>
+📈 Evolução da Operação
+</h3>
+
+</div>
+
+<div class="grid2">
+
+<div class="panel">
+
+<h4>
+SLA ao longo do tempo
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartSLAEvolution"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+Volume diário
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartEvolution"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+GEOGRAFIA
+========================================================= -->
+
+<div class="section-title">
+
+<h3>
+🗺️ Distribuição Geográfica
+</h3>
+
+</div>
+
+<div class="grid3">
+
+<div class="panel">
+
+<h4>
+Top UFs por volume
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartUF"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+Top Cidades
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartCity"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+Top Destinos
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartDestination"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================================================
+PRIORIDADES
+========================================================= -->
+
+<div class="section-title">
+
+<h3>
+🚨 Prioridades Operacionais
+</h3>
+
+<small>
+Registros com maior risco
+</small>
+
+</div>
+
+<div class="grid2">
+
+<div class="panel">
+
+<h4>
+Fila de Prioridade
+</h4>
+
+<div
+class="risk-list"
+id="priorityList"
+></div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+🔥 Valor em Risco
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartRiskValue"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+PERFORMANCE
+========================================================= -->
+
+<section id="performance" class="section">
+
+<div class="kpis" id="perfKpis"></div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+🎯 SLA por Parceiro
+</h4>
+
+<div class="chartbox tall">
+
+<canvas id="chartPartnerSLA"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+📈 SLA por Cidade
+</h4>
+
+<div class="chartbox tall">
+
+<canvas id="chartCitySLA"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+⏱️ Distribuição do Lead Time
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartLead"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+📦 Entregues x Em Aberto
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartSLAStatus"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+💰 Valor por UF
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartValueUF"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+⚖️ Peso por Parceiro
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartWeightPartner"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+📦 Volume por UF
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartVolumeUF"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+⏳ Aging das NFs em Aberto
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartAging"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="panel"
+style="margin-top:14px"
+>
+
+<h4>
+🏆 Ranking de Performance por Parceiro
+</h4>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Parceiro</th>
+<th>Registros</th>
+<th>Entregues</th>
+<th>Atrasadas</th>
+<th>Ocorrências</th>
+<th>Lead Médio</th>
+<th>SLA</th>
+<th>Score</th>
+
+</tr>
+
+</thead>
+
+<tbody id="partnerTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+RISK
+========================================================= -->
+
+<section id="risk" class="section">
+
+<div class="grid2">
+
+<div class="panel">
+
+<h4>
+🚨 Registros Mais Críticos
+</h4>
+
+<div
+class="risk-list"
+id="riskList"
+></div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+🔥 Focos de Risco
+</h4>
+
+<div
+class="risk-list"
+id="focusList"
+></div>
+
+</div>
+
+</div>
+
+<div
+class="grid3"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+⚠️ Ocorrências Frequentes
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartOcc"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+🏙️ Cidades Críticas
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartCityRisk"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+🚚 Parceiros Críticos
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartPartnerRisk"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+PARTNERS
+========================================================= -->
+
+<section id="partners" class="section">
+
+<div class="grid2">
+
+<div class="panel">
+
+<h4>
+🚚 Ranking de Parceiros
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartPartner"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+👨‍✈️ Ranking de Motoristas
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartDriver"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+📦 Volume por Parceiro
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartPartnerVolume"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+💰 Valor por Parceiro
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartPartnerValue"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="panel"
+style="margin-top:14px"
+>
+
+<h4>
+Indicadores Detalhados
+</h4>
+
+<div class="tablewrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Entidade</th>
+<th>Tipo</th>
+<th>Registros</th>
+<th>Ocorrências</th>
+<th>Atrasos</th>
+<th>Entregues</th>
+<th>SLA</th>
+<th>Score</th>
+
+</tr>
+
+</thead>
+
+<tbody id="entityTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+OCCURRENCES
+========================================================= -->
+
+<section id="occurrences" class="section">
+
+<div class="kpis" id="occKpis"></div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+⚠️ Tipos de Ocorrência
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartOcc2"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+🗺️ Ocorrências por UF
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartOccUF"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+<div
+class="grid2"
+style="margin-top:14px"
+>
+
+<div class="panel">
+
+<h4>
+🏙️ Ocorrências por Cidade
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartOccCity"></canvas>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h4>
+🚚 Ocorrências por Parceiro
+</h4>
+
+<div class="chartbox">
+
+<canvas id="chartOccPartner"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+DATA
+========================================================= -->
+
+<section id="data" class="section">
+
+<div class="panel">
+
+<h4>
+📋 Base Operacional
+</h4>
+
+<div class="tablewrap">
+
+<table>
+
+<thead id="thead"></thead>
+
+<tbody id="tbody"></tbody>
+
+</table>
+
+</div>
+
+<div
+id="tableInfo"
+style="
+padding-top:12px;
+color:var(--muted);
+font-size:11px;
+"
+></div>
+
+</div>
+
+</section>
+
+<!-- =========================================================
+DIAGNOSTIC
+========================================================= -->
+
+<section id="diagnostic" class="section">
+
+<div class="panel">
+
+<h4>
+🔧 Diagnóstico da Leitura
+</h4>
+
+<div class="progress">
+
+<i id="prog"></i>
+
+</div>
+
+<div
+class="diag"
+id="diag"
+></div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+<script>
+
+/* =========================================================
+CONFIGURAÇÃO
+========================================================= */
+
+const SLA_META = 95;
+
+let DATA = [];
+let charts = {};
+let HEADERS = [];
+let HEADER_MAP = {};
+
+/* =========================================================
+ATALHO
+========================================================= */
+
+const $ = id => document.getElementById(id);
+
+/* =========================================================
+CAMPOS
+========================================================= */
+
+const FIELDS = [
+
+"NF_DOC",
+"EMISSAO",
+"VOL",
+"NF_VALOR",
+"PESO_REAL",
+"FORNECEDOR",
+"DESTINO",
+"CIDADE",
+"UF",
+"MANIFESTO",
+"DESCRICAO_ULTIMO",
+"COMPROVANTE_ENTREGA",
+"MOTORISTA",
+"PARCEIRO",
+"LEADTIME_ATUAL",
+"DATA_PREVISTA",
+"DIA_PREVISTO",
+"DATA_ENTREGA",
+"STATUS",
+"DIAS",
+"OCORRENCIA",
+"LEADTIME_ANTIGO",
+"DATA_PREVISTA_ANTERIOR",
+"DIFERENCA_DIAS"
+
+];
+
+const COLUMN_NAMES = {
+
+NF_DOC:"NF/DOC",
+EMISSAO:"EMISSÃO",
+VOL:"VOLUME",
+NF_VALOR:"NF VALOR",
+PESO_REAL:"PESO REAL",
+FORNECEDOR:"FORNECEDOR",
+DESTINO:"DESTINO",
+CIDADE:"CIDADE",
+UF:"UF",
+MANIFESTO:"MANIFESTO",
+DESCRICAO_ULTIMO:"DESCRIÇÃO ÚLTIMO",
+COMPROVANTE_ENTREGA:"COMPROVANTE ENTREGA",
+MOTORISTA:"MOTORISTA",
+PARCEIRO:"PARCEIRO",
+LEADTIME_ATUAL:"LEADTIME ATUAL",
+DATA_PREVISTA:"DATA PREVISTA",
+DIA_PREVISTO:"DIA PREVISTO",
+DATA_ENTREGA:"DATA DA ENTREGA",
+STATUS:"STATUS",
+DIAS:"DIAS",
+OCORRENCIA:"OCORRÊNCIA",
+LEADTIME_ANTIGO:"LEADTIME ANTIGO",
+DATA_PREVISTA_ANTERIOR:"DATA PREVISTA ANTERIOR",
+DIFERENCA_DIAS:"DIFERENÇA DE DIAS"
+
+};
+
+/* =========================================================
+ALIASES
+========================================================= */
+
+const HEADER_ALIASES = {
+
+NF_DOC:[
+"NF/DOC",
+"NF DOC",
+"NFDOC",
+"NF"
+],
+
+EMISSAO:[
+"EMISSAO",
+"EMISSÃO"
+],
+
+VOL:[
+"VOL",
+"VOLUME"
+],
+
+NF_VALOR:[
+"NF VALOR",
+"VALOR NF",
+"VALOR"
+],
+
+PESO_REAL:[
+"PESO REAL",
+"PESO"
+],
+
+FORNECEDOR:[
+"FORNECEDOR"
+],
+
+DESTINO:[
+"DESTINO"
+],
+
+CIDADE:[
+"CIDADE"
+],
+
+UF:[
+"UF",
+"ESTADO"
+],
+
+MANIFESTO:[
+"MANIFESTO"
+],
+
+DESCRICAO_ULTIMO:[
+"DESCRICAO ULTIMO",
+"DESCRIÇÃO ULTIMO",
+"DESCRICAO DO ULTIMO",
+"DESCRIÇÃO DO ÚLTIMO"
+],
+
+COMPROVANTE_ENTREGA:[
+"COMPROVANTE ENTREGA",
+"COMPROVANTE DE ENTREGA"
+],
+
+MOTORISTA:[
+"MOTORISTA"
+],
+
+PARCEIRO:[
+"PARCEIRO",
+"TRANSPORTADORA"
+],
+
+LEADTIME_ATUAL:[
+"LEADTIME ATUAL",
+"LEAD TIME ATUAL"
+],
+
+DATA_PREVISTA:[
+"DATA PREVISTA"
+],
+
+DIA_PREVISTO:[
+"DIA PREVISTO"
+],
+
+DATA_ENTREGA:[
+"DATA DA ENTREGA",
+"DATA ENTREGA"
+],
+
+STATUS:[
+"STATUS",
+"SITUACAO",
+"SITUAÇÃO"
+],
+
+DIAS:[
+"DIAS"
+],
+
+OCORRENCIA:[
+"OCORRENCIA",
+"OCORRÊNCIA"
+],
+
+LEADTIME_ANTIGO:[
+"LEADTIME ANTIGO",
+"LEAD TIME ANTIGO"
+],
+
+DATA_PREVISTA_ANTERIOR:[
+"DATA PREVISTA ANTERIOR"
+],
+
+DIFERENCA_DIAS:[
+"DIFERENCA DE DIAS",
+"DIFERENÇA DE DIAS"
+]
+
+};
+
+/* =========================================================
+FUNÇÕES BÁSICAS
+========================================================= */
+
+function text(v){
+
+    if(v === null || v === undefined){
+        return "";
+    }
+
+    return String(v).trim();
+}
+
+function normalize(v){
+
+    return text(v)
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"")
+        .replace(/\s+/g," ")
+        .toUpperCase()
+        .trim();
+}
+
+function headerKey(v){
+
+    return normalize(v)
+        .replace(/[^A-Z0-9]/g,"");
+}
+
+function value(record,field){
+
+    return record
+        ? record[field] ?? ""
+        : "";
+}
+
+/* =========================================================
+NÚMEROS
+========================================================= */
+
+function numberValue(v){
+
+    if(
+        v === null ||
+        v === undefined ||
+        v === ""
+    ){
+        return 0;
+    }
+
+    if(typeof v === "number"){
+
+        return Number.isFinite(v)
+            ? v
+            : 0;
+    }
+
+    let s = text(v)
+        .replace(/R\$/gi,"")
+        .replace(/\s/g,"");
+
+    if(
+        s.includes(".") &&
+        s.includes(",")
+    ){
+
+        s = s
+            .replace(/\./g,"")
+            .replace(",",".");
+    }
+
+    else if(s.includes(",")){
+
+        s = s.replace(",",".");
+    }
+
+    s = s.replace(/[^\d.-]/g,"");
+
+    const n = Number(s);
+
+    return Number.isFinite(n)
+        ? n
+        : 0;
+}
+
+/* =========================================================
+FORMATADORES
+========================================================= */
+
+function br(v){
+
+    return new Intl.NumberFormat(
+        "pt-BR",
+        {
+            maximumFractionDigits:0
+        }
+    ).format(v || 0);
+}
+
+function decimalBR(v,d=1){
+
+    return new Intl.NumberFormat(
+        "pt-BR",
+        {
+            minimumFractionDigits:d,
+            maximumFractionDigits:d
+        }
+    ).format(v || 0);
+}
+
+function money(v){
+
+    return new Intl.NumberFormat(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL",
+            maximumFractionDigits:0
+        }
+    ).format(v || 0);
+}
+
+function escapeHTML(v){
+
+    return String(v ?? "")
+        .replace(
+            /[&<>"']/g,
+            char => {
+
+                const map = {
+
+                    "&":"&amp;",
+                    "<":"&lt;",
+                    ">":"&gt;",
+                    '"':"&quot;",
+                    "'":"&#39;"
+
+                };
+
+                return map[char];
+            }
+        );
+}
+
+/* =========================================================
+DIAGNÓSTICO
+========================================================= */
+
+function log(message,type="info"){
+
+    const div =
+        document.createElement("div");
+
+    div.className = type;
+
+    div.textContent = message;
+
+    $("diag").appendChild(div);
+
+    $("diag").scrollTop =
+        $("diag").scrollHeight;
+}
+
+function setProgress(v){
+
+    $("prog").style.width =
+        v + "%";
+}
+
+/* =========================================================
+STATUS
+========================================================= */
+
+function getStatus(record){
+
+    return normalize(
+        value(record,"STATUS")
+    );
+}
+
+function isInvalidStatus(record){
+
+    const s = getStatus(record);
+
+    return (
+        s === "#VALOR!" ||
+        s === "#VALOR"
+    );
+}
+
+function isDelivered(record){
+
+    return getStatus(record) === "ENTREGUE";
+}
+
+function isLate(record){
+
+    return getStatus(record) === "ATRASADA";
+}
+
+function isPastDue(record){
+
+    return getStatus(record) === "PASSOU DO PRAZO";
+}
+
+function isOpen(record){
+
+    return getStatus(record) === "PENDENTE";
+}
+
+/* =========================================================
+DIAS
+========================================================= */
+
+function hasNegativeDays(record){
+
+    return numberValue(
+        value(record,"DIAS")
+    ) < 0;
+}
+
+function hasPositiveDays(record){
+
+    return numberValue(
+        value(record,"DIAS")
+    ) > 0;
+}
+
+/* =========================================================
+OCORRÊNCIA
+========================================================= */
+
+function hasOccurrence(record){
+
+    const occurrence =
+        normalize(
+            value(record,"OCORRENCIA")
+        );
+
+    if(!occurrence){
+        return false;
+    }
+
+    const emptyValues = [
+
+        "N/A",
+        "NA",
+        "-",
+        "NULL",
+        "UNDEFINED",
+        "0",
+        "SEM OCORRENCIA",
+        "SEM",
+        "NAO",
+        "NONE"
+
+    ];
+
+    return !emptyValues.includes(
+        occurrence
+    );
+}
+
+/* =========================================================
+SCORE DE RISCO
+========================================================= */
+
+function riskScore(record){
+
+    let score = 0;
+
+    if(isLate(record)){
+        score += 45;
+    }
+
+    if(isPastDue(record)){
+        score += 45;
+    }
+
+    if(hasNegativeDays(record)){
+        score += 20;
+    }
+
+    if(hasOccurrence(record)){
+        score += 25;
+    }
+
+    if(isOpen(record)){
+        score += 10;
+    }
+
+    const lead =
+        numberValue(
+            value(
+                record,
+                "LEADTIME_ATUAL"
+            )
+        );
+
+    if(lead >= 15){
+        score += 15;
+    }
+
+    else if(lead >= 10){
+        score += 10;
+    }
+
+    else if(lead >= 5){
+        score += 5;
+    }
+
+    return Math.min(
+        100,
+        score
+    );
+}
+
+/* =========================================================
+SLA
+========================================================= */
+
+function calculateSLA(rows){
+
+    const valid =
+        rows.filter(
+            r => !isInvalidStatus(r)
+        );
+
+    const delivered =
+        valid.filter(isDelivered).length;
+
+    const late =
+        valid.filter(isLate).length;
+
+    const past =
+        valid.filter(isPastDue).length;
+
+    const open =
+        valid.filter(isOpen).length;
+
+    const denominator =
+        delivered +
+        late +
+        past +
+        open;
+
+    if(!denominator){
+        return 0;
+    }
+
+    return (
+        delivered /
+        denominator
+    ) * 100;
+}
+
+function getSLAStatus(sla){
+
+    if(sla >= 95){
+
+        return {
+            text:"EXCELENTE",
+            cls:"b-green"
+        };
+
+    }
+
+    if(sla >= 90){
+
+        return {
+            text:"BOM",
+            cls:"b-blue"
+        };
+
+    }
+
+    if(sla >= 80){
+
+        return {
+            text:"ATENÇÃO",
+            cls:"b-yellow"
+        };
+
+    }
+
+    return {
+
+        text:"CRÍTICO",
+        cls:"b-red"
+
+    };
+}
+
+/* =========================================================
+FILTROS
+========================================================= */
+
+function filteredData(){
+
+    const search =
+        text(
+            $("search").value
+        ).toLowerCase();
+
+    const status =
+        $("fStatus").value;
+
+    const uf =
+        $("fUF").value;
+
+    const partner =
+        $("fPartner").value;
+
+    const driver =
+        $("fDriver").value;
+
+    const city =
+        $("fCity").value;
+
+    const destination =
+        $("fDestination").value;
+
+    const manifest =
+        $("fManifest").value;
+
+    return DATA.filter(record => {
+
+        const allText =
+            Object.values(record)
+                .join(" ")
+                .toLowerCase();
+
+        if(
+            search &&
+            !allText.includes(search)
+        ){
+            return false;
+        }
+
+        if(
+            status &&
+            text(
+                value(record,"STATUS")
+            ) !== status
+        ){
+            return false;
+        }
+
+        if(
+            uf &&
+            text(
+                value(record,"UF")
+            ) !== uf
+        ){
+            return false;
+        }
+
+        if(
+            partner &&
+            text(
+                value(record,"PARCEIRO")
+            ) !== partner
+        ){
+            return false;
+        }
+
+        if(
+            driver &&
+            text(
+                value(record,"MOTORISTA")
+            ) !== driver
+        ){
+            return false;
+        }
+
+        if(
+            city &&
+            text(
+                value(record,"CIDADE")
+            ) !== city
+        ){
+            return false;
+        }
+
+        if(
+            destination &&
+            text(
+                value(record,"DESTINO")
+            ) !== destination
+        ){
+            return false;
+        }
+
+        if(
+            manifest &&
+            text(
+                value(record,"MANIFESTO")
+            ) !== manifest
+        ){
+            return false;
+        }
+
+        return true;
+
+    });
+}
+
+/* =========================================================
+OPTIONS
+========================================================= */
+
+function setOptions(
+    id,
+    field,
+    label
+){
+
+    const select = $(id);
+
+    const current =
+        select.value;
+
+    const values = [
+
+        ...new Set(
+
+            DATA
+                .map(
+                    r =>
+                        text(
+                            value(
+                                r,
+                                field
+                            )
+                        )
+                )
+                .filter(Boolean)
+
+        )
+
+    ].sort(
+        (a,b) =>
+            a.localeCompare(
+                b,
+                "pt-BR"
+            )
+    );
+
+    select.innerHTML = "";
+
+    const first =
+        document.createElement(
+            "option"
+        );
+
+    first.value = "";
+
+    first.textContent = label;
+
+    select.appendChild(first);
+
+    values.forEach(v => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value = v;
+
+        option.textContent = v;
+
+        select.appendChild(option);
+
+    });
+
+    if(
+        [
+            ...select.options
+        ].some(
+            o =>
+                o.value === current
+        )
+    ){
+
+        select.value = current;
+
+    }
+}
+
+/* =========================================================
+GROUP
+========================================================= */
+
+function group(
+    rows,
+    field,
+    callback = () => 1
+){
+
+    const result = {};
+
+    rows.forEach(record => {
+
+        const name =
+            text(
+                value(
+                    record,
+                    field
+                )
+            ) ||
+            "NÃO INFORMADO";
+
+        result[name] =
+            (
+                result[name] || 0
+            ) +
+            callback(record);
+
+    });
+
+    return Object.entries(result)
+        .sort(
+            (a,b) =>
+                b[1] - a[1]
+        );
+}
+
+/* =========================================================
+DATA FORMAT
+========================================================= */
+
+function dateKey(v){
+
+    const s = text(v);
+
+    if(!s){
+        return "";
+    }
+
+    const d =
+        new Date(s);
+
+    if(
+        !Number.isNaN(
+            d.getTime()
+        )
+    ){
+
+        return d.toLocaleDateString(
+            "pt-BR"
+        );
+
+    }
+
+    return s;
+}
+
+/* =========================================================
+CHART
+========================================================= */
+
+function createChart(
+    id,
+    type,
+    labels,
+    data,
+    label,
+    options={}
+){
+
+    const canvas =
+        $(id);
+
+    if(!canvas){
+        return;
+    }
+
+    if(charts[id]){
+        charts[id].destroy();
+    }
+
+    const isCircular =
+        [
+            "doughnut",
+            "pie",
+            "polarArea"
+        ].includes(type);
+
+    charts[id] =
+        new Chart(
+            canvas,
+            {
+
+                type:type,
+
+                data:{
+
+                    labels:labels,
+
+                    datasets:[
+
+                        {
+
+                            label:label,
+
+                            data:data,
+
+                            borderWidth:2,
+
+                            borderRadius:5,
+
+                            tension:.35
+
+                        }
+
+                    ]
+
+                },
+
+                options:{
+
+                    responsive:true,
+
+                    maintainAspectRatio:false,
+
+                    interaction:{
+                        mode:"index",
+                        intersect:false
+                    },
+
+                    ...options,
+
+                    plugins:{
+
+                        legend:{
+
+                            labels:{
+
+                                color:"#c9d9ea",
+
+                                font:{
+                                    size:10
+                                }
+
+                            }
+
+                        },
+
+                        tooltip:{
+
+                            backgroundColor:
+                                "#071522",
+
+                            borderColor:
+                                "#284967",
+
+                            borderWidth:1,
+
+                            titleColor:
+                                "#ffffff",
+
+                            bodyColor:
+                                "#c9d9ea"
+
+                        }
+
+                    },
+
+                    scales:
+                        isCircular
+                        ? {}
+                        :
+                        {
+
+                            x:{
+
+                                ticks:{
+                                    color:"#9db1c6",
+                                    font:{
+                                        size:9
+                                    }
+                                },
+
+                                grid:{
+                                    color:"#1b3048"
+                                }
+
+                            },
+
+                            y:{
+
+                                beginAtZero:true,
+
+                                ticks:{
+                                    color:"#9db1c6",
+                                    font:{
+                                        size:9
+                                    }
+                                },
+
+                                grid:{
+                                    color:"#1b3048"
+                                }
+
+                            }
+
+                        }
+
+                }
+
+            }
+        );
+}
+
+/* =========================================================
+CARDS
+========================================================= */
+
+function cards(items){
+
+    return items.map(
+        item => `
+
+        <div class="kpi ${item[3] || ""}">
+
+            <div class="label">
+                ${item[0]}
+            </div>
+
+            <div class="value">
+                ${item[1]}
+            </div>
+
+            <div class="sub">
+                ${item[2]}
+            </div>
+
+        </div>
+
+        `
+    ).join("");
+}
+
+/* =========================================================
+PERCENTUAL
+========================================================= */
+
+function pct(a,b){
+
+    if(!b){
+        return 0;
+    }
+
+    return Math.round(
+        (a/b)*100
+    );
+}
+
+/* =========================================================
+RISK HTML
+========================================================= */
+
+function riskHTML(record){
+
+    const score =
+        riskScore(record);
+
+    let cls = "b-blue";
+
+    let label = "NORMAL";
+
+    if(score >= 70){
+
+        cls = "b-red";
+
+        label = "CRÍTICO";
+
+    }
+
+    else if(score >= 40){
+
+        cls = "b-yellow";
+
+        label = "ATENÇÃO";
+
+    }
+
+    const dias =
+        numberValue(
+            value(
+                record,
+                "DIAS"
+            )
+        );
+
+    return `
+
+    <div class="risk">
+
+        <div class="score">
+            ${score}
+        </div>
+
+        <div>
+
+            <b>
+                ${escapeHTML(
+                    text(
+                        value(
+                            record,
+                            "NF_DOC"
+                        )
+                    ) ||
+                    "SEM NF"
+                )}
+
+                •
+
+                ${escapeHTML(
+                    text(
+                        value(
+                            record,
+                            "CIDADE"
+                        )
+                    ) ||
+                    text(
+                        value(
+                            record,
+                            "DESTINO"
+                        )
+                    ) ||
+                    "Destino não informado"
+                )}
+
+            </b>
+
+            <small>
+
+                ${escapeHTML(
+                    text(
+                        value(
+                            record,
+                            "STATUS"
+                        )
+                    ) ||
+                    "SEM STATUS"
+                )}
+
+                · ${dias} dias
+
+                ·
+
+                ${escapeHTML(
+                    text(
+                        value(
+                            record,
+                            "PARCEIRO"
+                        )
+                    ) ||
+                    "Sem parceiro"
+                )}
+
+            </small>
+
+        </div>
+
+        <div>
+
+            <span
+                class="badge ${cls}"
+            >
+                ${label}
+            </span>
+
+        </div>
+
+    </div>
+
+    `;
+}
+
+/* =========================================================
+ENTITY SCORE
+========================================================= */
+
+function entityScore(
+    rows,
+    field
+){
+
+    const map = {};
+
+    rows.forEach(record => {
+
+        const name =
+            text(
+                value(
+                    record,
+                    field
+                )
+            ) ||
+            "NÃO INFORMADO";
+
+        if(!map[name]){
+            map[name] = [];
+        }
+
+        map[name].push(
+            record
+        );
+
+    });
+
+    return Object.entries(map)
+        .map(
+            ([name,list]) => {
+
+                const score =
+                    list.reduce(
+                        (sum,r) =>
+                            sum +
+                            riskScore(r),
+                        0
+                    ) /
+                    Math.max(
+                        1,
+                        list.length
+                    );
+
+                const delivered =
+                    list.filter(
+                        isDelivered
+                    ).length;
+
+                const late =
+                    list.filter(
+                        r =>
+                            isLate(r) ||
+                            isPastDue(r)
+                    ).length;
+
+                const denominator =
+                    delivered +
+                    late +
+                    list.filter(
+                        isOpen
+                    ).length;
+
+                const sla =
+                    denominator
+                    ?
+                    (
+                        delivered /
+                        denominator
+                    ) * 100
+                    :
+                    0;
+
+                return {
+
+                    name,
+                    rows:list,
+
+                    score:
+                        Math.round(score),
+
+                    occurrence:
+                        list.filter(
+                            hasOccurrence
+                        ).length,
+
+                    late,
+
+                    delivered,
+
+                    sla
+
+                };
+
+            }
+        )
+        .sort(
+            (a,b) =>
+                b.score -
+                a.score
+        );
+}
+
+/* =========================================================
+PARTNER TABLE
+========================================================= */
+
+function renderPartnerTable(rows){
+
+    const ranking =
+        entityScore(
+            rows,
+            "PARCEIRO"
+        );
+
+    $("partnerTable").innerHTML =
+        ranking.map(
+            item => {
+
+                const leads =
+                    item.rows
+                        .map(
+                            r =>
+                                numberValue(
+                                    value(
+                                        r,
+                                        "LEADTIME_ATUAL"
+                                    )
+                                )
+                        )
+                        .filter(
+                            v => v > 0
+                        );
+
+                const leadAverage =
+                    leads.length
+                    ?
+                    leads.reduce(
+                        (a,b) =>
+                            a+b,
+                        0
+                    ) /
+                    leads.length
+                    :
+                    0;
+
+                return `
+
+                <tr>
+
+                    <td>
+                        ${escapeHTML(
+                            item.name
+                        )}
+                    </td>
+
+                    <td>
+                        ${br(
+                            item.rows.length
+                        )}
+                    </td>
+
+                    <td>
+                        ${br(
+                            item.delivered
+                        )}
+                    </td>
+
+                    <td>
+                        ${br(
+                            item.late
+                        )}
+                    </td>
+
+                    <td>
+                        ${br(
+                            item.occurrence
+                        )}
+                    </td>
+
+                    <td>
+                        ${decimalBR(
+                            leadAverage
+                        )}
+                        dias
+                    </td>
+
+                    <td>
+                        ${decimalBR(
+                            item.sla
+                        )}%
+                    </td>
+
+                    <td>
+                        ${item.score}
+                    </td>
+
+                </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+/* =========================================================
+FOCUS
+========================================================= */
+
+function renderFocus(rows){
+
+    const partners =
+        entityScore(
+            rows,
+            "PARCEIRO"
+        )
+        .slice(0,8)
+        .map(
+            item => ({
+
+                name:item.name,
+                type:"Parceiro",
+                score:item.score,
+                late:item.late,
+                occurrence:item.occurrence
+
+            })
+        );
+
+    const cities =
+        entityScore(
+            rows,
+            "CIDADE"
+        )
+        .slice(0,8)
+        .map(
+            item => ({
+
+                name:item.name,
+                type:"Cidade",
+                score:item.score,
+                late:item.late,
+                occurrence:item.occurrence
+
+            })
+        );
+
+    const all =
+        [
+            ...partners,
+            ...cities
+        ]
+        .sort(
+            (a,b) =>
+                b.score -
+                a.score
+        )
+        .slice(0,12);
+
+    $("focusList").innerHTML =
+        all.length
+        ?
+        all.map(
+            item => `
+
+            <div class="risk">
+
+                <div class="score">
+                    ${item.score}
+                </div>
+
+                <div>
+
+                    <b>
+                        ${escapeHTML(
+                            item.name
+                        )}
+                    </b>
+
+                    <small>
+
+                        ${item.type}
+
+                        ·
+
+                        ${item.late}
+                        problemas de prazo
+
+                        ·
+
+                        ${item.occurrence}
+                        ocorrências
+
+                    </small>
+
+                </div>
+
+                <div>
+
+                    <span
+                        class="badge ${
+                            item.score >= 70
+                            ? "b-red"
+                            : "b-yellow"
+                        }"
+                    >
+
+                        ${
+                            item.score >= 70
+                            ? "ALTO"
+                            : "MONITORAR"
+                        }
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            `
+        ).join("")
+
+        :
+
+        `<div class="empty">
+            Nenhum foco encontrado.
+        </div>`;
+
+}
+
+/* =========================================================
+ENTITY TABLE
+========================================================= */
+
+function renderEntityTable(
+    partners,
+    drivers
+){
+
+    const all = [
+
+        ...partners.map(
+            item => ({
+                ...item,
+                type:"Parceiro"
+            })
+        ),
+
+        ...drivers.map(
+            item => ({
+                ...item,
+                type:"Motorista"
+            })
+        )
+
+    ]
+    .sort(
+        (a,b) =>
+            b.score -
+            a.score
+    );
+
+    $("entityTable").innerHTML =
+        all.map(
+            item => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(
+                        item.name
+                    )}
+                </td>
+
+                <td>
+                    ${item.type}
+                </td>
+
+                <td>
+                    ${br(
+                        item.rows.length
+                    )}
+                </td>
+
+                <td>
+                    ${br(
+                        item.occurrence
+                    )}
+                </td>
+
+                <td>
+                    ${br(
+                        item.late
+                    )}
+                </td>
+
+                <td>
+                    ${br(
+                        item.delivered
+                    )}
+                </td>
+
+                <td>
+                    ${decimalBR(
+                        item.sla
+                    )}%
+                </td>
+
+                <td>
+                    ${item.score}
+                </td>
+
+            </tr>
+
+            `
+        )
+        .join("");
+
+}
+
+/* =========================================================
+TABLE
+========================================================= */
+
+function renderTable(rows){
+
+    $("thead").innerHTML =
+        "<tr>" +
+
+        [
+            "PRIORIDADE",
+            ...FIELDS
+        ]
+        .map(
+            field => `
+
+                <th>
+
+                    ${
+                        field ===
+                        "PRIORIDADE"
+
+                        ?
+
+                        "PRIORIDADE"
+
+                        :
+
+                        escapeHTML(
+                            COLUMN_NAMES[field]
+                        )
+                    }
+
+                </th>
+
+            `
+        )
+        .join("") +
+
+        "</tr>";
+
+    $("tbody").innerHTML =
+        rows
+        .slice(0,1000)
+        .map(
+            record => `
+
+            <tr>
+
+                <td>
+
+                    <span
+                        class="badge ${
+                            riskScore(record)>=70
+                            ? "b-red"
+                            :
+                            riskScore(record)>=40
+                            ? "b-yellow"
+                            :
+                            "b-green"
+                        }"
+                    >
+
+                        ${riskScore(record)}
+
+                    </span>
+
+                </td>
+
+                ${FIELDS.map(
+                    field => `
+
+                    <td>
+
+                        ${escapeHTML(
+                            text(
+                                value(
+                                    record,
+                                    field
+                                )
+                            )
+                        )}
+
+                    </td>
+
+                    `
+                ).join("")}
+
+            </tr>
+
+            `
+        )
+        .join("");
+
+    $("tableInfo").textContent =
+        "Exibindo " +
+
+        br(
+            Math.min(
+                1000,
+                rows.length
+            )
+        ) +
+
+        " de " +
+
+        br(rows.length) +
+
+        " registros filtrados.";
+
+}
+
+/* =========================================================
+SLA GAUGE
+========================================================= */
+
+function renderSLA(sla){
+
+    const valueSLA =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                sla
+            )
+        );
+
+    createChart(
+        "chartSLA",
+        "doughnut",
+
+        [
+            "SLA",
+            "Fora do SLA"
+        ],
+
+        [
+            valueSLA,
+            100-valueSLA
+        ],
+
+        "",
+
+        {
+
+            rotation:-90,
+
+            circumference:180,
+
+            cutout:"78%",
+
+            plugins:{
+
+                legend:{
+                    display:false
+                },
+
+                tooltip:{
+                    enabled:false
+                }
+
+            }
+
+        }
+    );
+
+    $("slaValue").textContent =
+        decimalBR(valueSLA) +
+        "%";
+
+    const status =
+        getSLAStatus(
+            valueSLA
+        );
+
+    $("slaStatus").textContent =
+        status.text;
+
+    $("slaStatus").className =
+        "sla-status badge " +
+        status.cls;
+
+    const gap =
+        valueSLA -
+        SLA_META;
+
+    $("slaGap").textContent =
+        (
+            gap >= 0
+            ? "+"
+            : ""
+        ) +
+        decimalBR(gap) +
+        " p.p.";
+
+}
+
+/* =========================================================
+INSIGHTS EXECUTIVOS
+========================================================= */
+
+function renderInsights(
+    rows,
+    sla,
+    delivered,
+    late,
+    pastDue,
+    open,
+    occurrence,
+    riskValue,
+    valueTotal,
+    leadAverage
+){
+
+    const partnerRanking =
+        entityScore(
+            rows,
+            "PARCEIRO"
+        );
+
+    const worstPartner =
+        partnerRanking
+            .filter(
+                x =>
+                    x.rows.length >= 3
+            )
+            .sort(
+                (a,b) =>
+                    a.sla -
+                    b.sla
+            )[0];
+
+    const bestPartner =
+        partnerRanking
+            .filter(
+                x =>
+                    x.rows.length >= 3
+            )
+            .sort(
+                (a,b) =>
+                    b.sla -
+                    a.sla
+            )[0];
+
+    let html = "";
+
+    if(sla >= SLA_META){
+
+        html += `
+
+        <div class="insight">
+
+            <div class="insight-icon">
+                🟢
+            </div>
+
+            <div class="insight-content">
+
+                <b>
+                    Operação dentro da meta
+                </b>
+
+                <span>
+                    O SLA atual de
+                    ${decimalBR(sla)}%
+                    está
+                    ${decimalBR(
+                        sla-SLA_META
+                    )}
+                    p.p. acima da meta de
+                    ${SLA_META}%.
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }else{
+
+        html += `
+
+        <div class="insight">
+
+            <div class="insight-icon">
+                🔴
+            </div>
+
+            <div class="insight-content">
+
+                <b>
+                    SLA abaixo da meta
+                </b>
+
+                <span>
+                    O SLA está em
+                    ${decimalBR(sla)}%.
+                    É necessário recuperar
+                    ${decimalBR(
+                        SLA_META-sla
+                    )}
+                    p.p. para atingir a meta.
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    const lateRate =
+        rows.length
+        ?
+        (
+            (
+                late.length +
+                pastDue.length
+            ) /
+            rows.length
+        ) * 100
+        :
+        0;
+
+    html += `
+
+    <div class="insight">
+
+        <div class="insight-icon">
+            🚨
+        </div>
+
+        <div class="insight-content">
+
+            <b>
+                Pressão de prazo
+            </b>
+
+            <span>
+                ${br(
+                    late.length +
+                    pastDue.length
+                )}
+                registros estão atrasados
+                ou fora do prazo,
+                representando
+                ${decimalBR(lateRate)}%
+                da base filtrada.
+            </span>
+
+        </div>
+
+    </div>
+
+    `;
+
+    html += `
+
+    <div class="insight">
+
+        <div class="insight-icon">
+            💰
+        </div>
+
+        <div class="insight-content">
+
+            <b>
+                Exposição financeira
+            </b>
+
+            <span>
+                ${money(riskValue)}
+                estão associados aos
+                registros classificados
+                como críticos.
+            </span>
+
+        </div>
+
+    </div>
+
+    `;
+
+    if(bestPartner){
+
+        html += `
+
+        <div class="insight">
+
+            <div class="insight-icon">
+                🏆
+            </div>
+
+            <div class="insight-content">
+
+                <b>
+                    Destaque positivo
+                </b>
+
+                <span>
+                    ${escapeHTML(
+                        bestPartner.name
+                    )}
+                    apresenta SLA de
+                    ${decimalBR(
+                        bestPartner.sla
+                    )}%.
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    if(worstPartner){
+
+        html += `
+
+        <div class="insight">
+
+            <div class="insight-icon">
+                ⚠️
+            </div>
+
+            <div class="insight-content">
+
+                <b>
+                    Principal ponto de atenção
+                </b>
+
+                <span>
+                    ${escapeHTML(
+                        worstPartner.name
+                    )}
+                    apresenta SLA de
+                    ${decimalBR(
+                        worstPartner.sla
+                    )}%.
+                    Recomenda-se analisar
+                    a operação deste parceiro.
+                </span>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }
+
+    html += `
+
+    <div class="insight">
+
+        <div class="insight-icon">
+            ⏱️
+        </div>
+
+        <div class="insight-content">
+
+            <b>
+                Lead Time médio
+            </b>
+
+            <span>
+                O Lead Time médio atual é de
+                ${decimalBR(
+                    leadAverage
+                )}
+                dias.
+            </span>
+
+        </div>
+
+    </div>
+
+    `;
+
+    $("insights").innerHTML =
+        html;
+
+}
+
+/* =========================================================
+RENDER PRINCIPAL
+========================================================= */
+
+function render(){
+
+    const rows =
+        filteredData();
+
+    const total =
+        rows.length;
+
+    const delivered =
+        rows.filter(
+            isDelivered
+        );
+
+    const late =
+        rows.filter(
+            isLate
+        );
+
+    const pastDue =
+        rows.filter(
+            isPastDue
+        );
+
+    const open =
+        rows.filter(
+            isOpen
+        );
+
+    const occurrence =
+        rows.filter(
+            hasOccurrence
+        );
+
+    const negative =
+        rows.filter(
+            hasNegativeDays
+        );
+
+    const valueTotal =
+        rows.reduce(
+            (sum,r) =>
+                sum +
+                numberValue(
+                    value(
+                        r,
+                        "NF_VALOR"
+                    )
+                ),
+            0
+        );
+
+    const volume =
+        rows.reduce(
+            (sum,r) =>
+                sum +
+                numberValue(
+                    value(
+                        r,
+                        "VOL"
+                    )
+                ),
+            0
+        );
+
+    const weight =
+        rows.reduce(
+            (sum,r) =>
+                sum +
+                numberValue(
+                    value(
+                        r,
+                        "PESO_REAL"
+                    )
+                ),
+            0
+        );
+
+    const critical =
+        rows.filter(
+            r =>
+                riskScore(r) >= 70
+        );
+
+    const riskValue =
+        critical.reduce(
+            (sum,r) =>
+                sum +
+                numberValue(
+                    value(
+                        r,
+                        "NF_VALOR"
+                    )
+                ),
+            0
+        );
+
+    const leads =
+        rows
+            .map(
+                r =>
+                    numberValue(
+                        value(
+                            r,
+                            "LEADTIME_ATUAL"
+                        )
+                    )
+            )
+            .filter(
+                v => v > 0
+            );
+
+    const leadAverage =
+        leads.length
+        ?
+        leads.reduce(
+            (a,b) =>
+                a+b,
+            0
+        ) /
+        leads.length
+        :
+        0;
+
+    const sla =
+        calculateSLA(
+            rows
+        );
+
+    $("countInfo").textContent =
+        br(total) +
+        " registros filtrados";
+
+    /* =====================================================
+    ALERTAS
+    ===================================================== */
+
+    $("alerts").innerHTML = `
+
+    <div class="alert critical">
+
+        <span>
+            🔴 ATRASADAS
+        </span>
+
+        <b>
+            ${br(late.length)}
+        </b>
+
+    </div>
+
+    <div class="alert warning">
+
+        <span>
+            🟠 PASSOU DO PRAZO
+        </span>
+
+        <b>
+            ${br(pastDue.length)}
+        </b>
+
+    </div>
+
+    <div class="alert attention">
+
+        <span>
+            🟡 PENDENTES
+        </span>
+
+        <b>
+            ${br(open.length)}
+        </b>
+
+    </div>
+
+    <div class="alert success">
+
+        <span>
+            🟢 ENTREGUES
+        </span>
+
+        <b>
+            ${br(delivered.length)}
+        </b>
+
+    </div>
+
+    <div class="alert info-alert">
+
+        <span>
+            ⚠️ OCORRÊNCIAS
+        </span>
+
+        <b>
+            ${br(occurrence.length)}
+        </b>
+
+    </div>
+
+    `;
+
+    /* =====================================================
+    KPIS
+    ===================================================== */
+
+    $("kpis").innerHTML =
+        cards([
+
+            [
+                "📄 REGISTROS",
+                br(total),
+                "Base operacional",
+                "info"
+            ],
+
+            [
+                "🎯 SLA",
+                decimalBR(sla) + "%",
+                getSLAStatus(sla).text,
+                sla >= SLA_META
+                ? "good"
+                : "danger"
+            ],
+
+            [
+                "💰 VALOR TOTAL",
+                money(valueTotal),
+                "Valor das NFs",
+                "info"
+            ],
+
+            [
+                "🔥 VALOR EM RISCO",
+                money(riskValue),
+                br(critical.length) +
+                " críticos",
+                "danger"
+            ],
+
+            [
+                "📦 VOLUMES",
+                br(volume),
+                "Total movimentado",
+                "info"
+            ],
+
+            [
+                "⚖️ PESO",
+                decimalBR(weight,0) +
+                " kg",
+                "Peso real",
+                "info"
+            ]
+
+        ]);
+
+    /* =====================================================
+    PERFORMANCE KPIS
+    ===================================================== */
+
+    $("perfKpis").innerHTML =
+        cards([
+
+            [
+                "🎯 SLA",
+                decimalBR(sla) + "%",
+                getSLAStatus(sla).text,
+                sla >= SLA_META
+                ? "good"
+                : "danger"
+            ],
+
+            [
+                "🟢 ENTREGUES",
+                br(delivered.length),
+                pct(
+                    delivered.length,
+                    total
+                ) + "%",
+                "good"
+            ],
+
+            [
+                "🔴 ATRASADAS",
+                br(late.length),
+                pct(
+                    late.length,
+                    total
+                ) + "%",
+                "danger"
+            ],
+
+            [
+                "🟠 FORA DO PRAZO",
+                br(pastDue.length),
+                pct(
+                    pastDue.length,
+                    total
+                ) + "%",
+                "danger"
+            ],
+
+            [
+                "🟡 PENDENTES",
+                br(open.length),
+                pct(
+                    open.length,
+                    total
+                ) + "%",
+                "warning"
+            ],
+
+            [
+                "⏱️ LEAD MÉDIO",
+                decimalBR(
+                    leadAverage
+                ) +
+                " dias",
+                "Lead Time atual",
+                "info"
+            ]
+
+        ]);
+
+    /* =====================================================
+    OCORRÊNCIAS KPIS
+    ===================================================== */
+
+    $("occKpis").innerHTML =
+        cards([
+
+            [
+                "⚠️ OCORRÊNCIAS",
+                br(
+                    occurrence.length
+                ),
+                pct(
+                    occurrence.length,
+                    total
+                ) + "%",
+                occurrence.length
+                ? "danger"
+                : "good"
+            ],
+
+            [
+                "🗺️ UFs",
+                br(
+                    new Set(
+                        occurrence
+                        .map(
+                            r =>
+                                text(
+                                    value(
+                                        r,
+                                        "UF"
+                                    )
+                                )
+                        )
+                        .filter(Boolean)
+                    ).size
+                ),
+                "Afetadas",
+                "info"
+            ],
+
+            [
+                "🏙️ CIDADES",
+                br(
+                    new Set(
+                        occurrence
+                        .map(
+                            r =>
+                                text(
+                                    value(
+                                        r,
+                                        "CIDADE"
+                                    )
+                                )
+                        )
+                        .filter(Boolean)
+                    ).size
+                ),
+                "Afetadas",
+                "info"
+            ],
+
+            [
+                "🚚 PARCEIROS",
+                br(
+                    new Set(
+                        occurrence
+                        .map(
+                            r =>
+                                text(
+                                    value(
+                                        r,
+                                        "PARCEIRO"
+                                    )
+                                )
+                        )
+                        .filter(Boolean)
+                    ).size
+                ),
+                "Afetados",
+                "info"
+            ],
+
+            [
+                "🔴 DIAS NEGATIVOS",
+                br(
+                    negative.length
+                ),
+                "Problemas de prazo",
+                "danger"
+            ],
+
+            [
+                "💰 EM RISCO",
+                money(riskValue),
+                "Score ≥ 70",
+                "danger"
+            ]
+
+        ]);
+
+    /* =====================================================
+    SLA
+    ===================================================== */
+
+    renderSLA(sla);
+
+    /* =====================================================
+    INSIGHTS
+    ===================================================== */
+
+    renderInsights(
+        rows,
+        sla,
+        delivered,
+        late,
+        pastDue,
+        open,
+        occurrence,
+        riskValue,
+        valueTotal,
+        leadAverage
+    );
+
+    /* =====================================================
+    STATUS
+    ===================================================== */
+
+    const valid =
+        rows.filter(
+            r =>
+                !isInvalidStatus(r)
+        );
+
+    const statuses =
+        group(
+            valid,
+            "STATUS"
+        )
+        .slice(0,10);
+
+    createChart(
+        "chartStatus",
+        "doughnut",
+
+        statuses.map(
+            x => x[0]
+        ),
+
+        statuses.map(
+            x => x[1]
+        ),
+
+        "Registros"
+    );
+
+    createChart(
+        "chartSLAStatus",
+        "doughnut",
+
+        [
+            "Entregues",
+            "Atrasadas",
+            "Passou do prazo",
+            "Pendentes"
+        ],
+
+        [
+            delivered.length,
+            late.length,
+            pastDue.length,
+            open.length
+        ],
+
+        "Registros"
+    );
+
+    /* =====================================================
+    SLA TARGET
+    ===================================================== */
+
+    createChart(
+        "chartSLATarget",
+        "bar",
+
+        [
+            "SLA ATUAL",
+            "META"
+        ],
+
+        [
+            sla,
+            SLA_META
+        ],
+
+        "Percentual",
+
+        {
+
+            scales:{
+
+                y:{
+
+                    beginAtZero:true,
+
+                    max:100,
+
+                    ticks:{
+                        callback:
+                            value =>
+                                value + "%"
+                    },
+
+                    grid:{
+                        color:"#1b3048"
+                    }
+
+                },
+
+                x:{
+                    ticks:{
+                        color:"#9db1c6"
+                    },
+
+                    grid:{
+                        color:"#1b3048"
+                    }
+                }
+
+            }
+
+        }
+    );
+
+    /* =====================================================
+    FINANCEIRO
+    ===================================================== */
+
+    createChart(
+        "chartFinancial",
+        "doughnut",
+
+        [
+            "Valor em risco",
+            "Valor fora do risco"
+        ],
+
+        [
+            riskValue,
+            Math.max(
+                0,
+                valueTotal-riskValue
+            )
+        ],
+
+        "R$"
+    );
+
+    /* =====================================================
+    UF
+    ===================================================== */
+
+    const ufs =
+        group(
+            rows,
+            "UF",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "VOL"
+                    )
+                )
+        )
+        .slice(0,10);
+
+    createChart(
+        "chartUF",
+        "bar",
+
+        ufs.map(
+            x => x[0]
+        ),
+
+        ufs.map(
+            x => x[1]
+        ),
+
+        "Volumes"
+    );
+
+    /* =====================================================
+    CIDADES
+    ===================================================== */
+
+    const cities =
+        group(
+            rows,
+            "CIDADE"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartCity",
+        "bar",
+
+        cities.map(
+            x => x[0]
+        ),
+
+        cities.map(
+            x => x[1]
+        ),
+
+        "Registros"
+    );
+
+    /* =====================================================
+    DESTINOS
+    ===================================================== */
+
+    const destinations =
+        group(
+            rows,
+            "DESTINO"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartDestination",
+        "bar",
+
+        destinations.map(
+            x => x[0]
+        ),
+
+        destinations.map(
+            x => x[1]
+        ),
+
+        "Registros"
+    );
+
+    /* =====================================================
+    PARCEIROS
+    ===================================================== */
+
+    const partners =
+        group(
+            rows,
+            "PARCEIRO"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartPartner",
+        "bar",
+
+        partners.map(
+            x => x[0]
+        ),
+
+        partners.map(
+            x => x[1]
+        ),
+
+        "Registros"
+    );
+
+    /* =====================================================
+    MOTORISTAS
+    ===================================================== */
+
+    const drivers =
+        entityScore(
+            rows,
+            "MOTORISTA"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartDriver",
+        "bar",
+
+        drivers.map(
+            x => x.name
+        ),
+
+        drivers.map(
+            x => x.score
+        ),
+
+        "Score"
+    );
+
+    /* =====================================================
+    VOLUME PARCEIRO
+    ===================================================== */
+
+    const partnerVolume =
+        group(
+            rows,
+            "PARCEIRO",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "VOL"
+                    )
+                )
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartPartnerVolume",
+        "bar",
+
+        partnerVolume.map(
+            x => x[0]
+        ),
+
+        partnerVolume.map(
+            x => x[1]
+        ),
+
+        "Volumes"
+    );
+
+    /* =====================================================
+    VALOR PARCEIRO
+    ===================================================== */
+
+    const partnerValue =
+        group(
+            rows,
+            "PARCEIRO",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "NF_VALOR"
+                    )
+                )
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartPartnerValue",
+        "bar",
+
+        partnerValue.map(
+            x => x[0]
+        ),
+
+        partnerValue.map(
+            x => x[1]
+        ),
+
+        "Valor"
+    );
+
+    /* =====================================================
+    VALOR UF
+    ===================================================== */
+
+    const valueUF =
+        group(
+            rows,
+            "UF",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "NF_VALOR"
+                    )
+                )
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartValueUF",
+        "bar",
+
+        valueUF.map(
+            x => x[0]
+        ),
+
+        valueUF.map(
+            x => x[1]
+        ),
+
+        "Valor"
+    );
+
+    /* =====================================================
+    PESO PARCEIRO
+    ===================================================== */
+
+    const weightPartner =
+        group(
+            rows,
+            "PARCEIRO",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "PESO_REAL"
+                    )
+                )
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartWeightPartner",
+        "bar",
+
+        weightPartner.map(
+            x => x[0]
+        ),
+
+        weightPartner.map(
+            x => x[1]
+        ),
+
+        "Peso"
+    );
+
+    /* =====================================================
+    VOLUME UF
+    ===================================================== */
+
+    const volumeUF =
+        group(
+            rows,
+            "UF",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "VOL"
+                    )
+                )
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartVolumeUF",
+        "bar",
+
+        volumeUF.map(
+            x => x[0]
+        ),
+
+        volumeUF.map(
+            x => x[1]
+        ),
+
+        "Volumes"
+    );
+
+    /* =====================================================
+    LEAD TIME
+    ===================================================== */
+
+    const leadGroup =
+        group(
+            rows.filter(
+                r =>
+                    numberValue(
+                        value(
+                            r,
+                            "LEADTIME_ATUAL"
+                        )
+                    ) > 0
+            ),
+            "LEADTIME_ATUAL"
+        )
+        .slice(0,15);
+
+    createChart(
+        "chartLead",
+        "bar",
+
+        leadGroup.map(
+            x => x[0]
+        ),
+
+        leadGroup.map(
+            x => x[1]
+        ),
+
+        "Registros"
+    );
+
+    /* =====================================================
+    AGING
+    ===================================================== */
+
+    const aging = {
+
+        "0-2 dias":0,
+        "3-5 dias":0,
+        "6-10 dias":0,
+        "11-15 dias":0,
+        "16+ dias":0
+
+    };
+
+    open.forEach(
+        r => {
+
+            const days =
+                Math.abs(
+                    numberValue(
+                        value(
+                            r,
+                            "DIAS"
+                        )
+                    )
+                );
+
+            if(days <= 2){
+                aging["0-2 dias"]++;
+            }
+
+            else if(days <= 5){
+                aging["3-5 dias"]++;
+            }
+
+            else if(days <= 10){
+                aging["6-10 dias"]++;
+            }
+
+            else if(days <= 15){
+                aging["11-15 dias"]++;
+            }
+
+            else{
+                aging["16+ dias"]++;
+            }
+
+        }
+    );
+
+    createChart(
+        "chartAging",
+        "bar",
+
+        Object.keys(aging),
+
+        Object.values(aging),
+
+        "NFs"
+    );
+
+    /* =====================================================
+    SLA PARCEIRO
+    ===================================================== */
+
+    const partnerSLA =
+        entityScore(
+            rows,
+            "PARCEIRO"
+        )
+        .filter(
+            x =>
+                x.rows.length >= 3
+        )
+        .sort(
+            (a,b) =>
+                b.sla -
+                a.sla
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartPartnerSLA",
+        "bar",
+
+        partnerSLA.map(
+            x => x.name
+        ),
+
+        partnerSLA.map(
+            x => x.sla
+        ),
+
+        "SLA %",
+
+        {
+
+            indexAxis:"y",
+
+            scales:{
+
+                x:{
+
+                    min:0,
+
+                    max:100,
+
+                    ticks:{
+                        callback:
+                            v => v + "%"
+                    },
+
+                    grid:{
+                        color:"#1b3048"
+                    }
+
+                },
+
+                y:{
+
+                    ticks:{
+                        color:"#9db1c6",
+                        font:{
+                            size:9
+                        }
+                    },
+
+                    grid:{
+                        display:false
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+    /* =====================================================
+    SLA CIDADE
+    ===================================================== */
+
+    const citySLA =
+        entityScore(
+            rows,
+            "CIDADE"
+        )
+        .filter(
+            x =>
+                x.rows.length >= 3
+        )
+        .sort(
+            (a,b) =>
+                b.sla -
+                a.sla
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartCitySLA",
+        "bar",
+
+        citySLA.map(
+            x => x.name
+        ),
+
+        citySLA.map(
+            x => x.sla
+        ),
+
+        "SLA %",
+
+        {
+
+            indexAxis:"y",
+
+            scales:{
+
+                x:{
+
+                    min:0,
+
+                    max:100,
+
+                    ticks:{
+                        callback:
+                            v => v + "%"
+                    }
+
+                },
+
+                y:{
+
+                    ticks:{
+                        color:"#9db1c6",
+                        font:{
+                            size:9
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+    /* =====================================================
+    OCORRÊNCIAS
+    ===================================================== */
+
+    const occGroup =
+        group(
+            occurrence,
+            "OCORRENCIA"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartOcc",
+        "bar",
+
+        occGroup.map(
+            x => x[0]
+        ),
+
+        occGroup.map(
+            x => x[1]
+        ),
+
+        "Ocorrências"
+    );
+
+    createChart(
+        "chartOcc2",
+        "doughnut",
+
+        occGroup.map(
+            x => x[0]
+        ),
+
+        occGroup.map(
+            x => x[1]
+        ),
+
+        "Ocorrências"
+    );
+
+    /* =====================================================
+    OCORRÊNCIA UF
+    ===================================================== */
+
+    const occUF =
+        group(
+            occurrence,
+            "UF"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartOccUF",
+        "bar",
+
+        occUF.map(
+            x => x[0]
+        ),
+
+        occUF.map(
+            x => x[1]
+        ),
+
+        "Ocorrências"
+    );
+
+    /* =====================================================
+    OCORRÊNCIA CIDADE
+    ===================================================== */
+
+    const occCity =
+        group(
+            occurrence,
+            "CIDADE"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartOccCity",
+        "bar",
+
+        occCity.map(
+            x => x[0]
+        ),
+
+        occCity.map(
+            x => x[1]
+        ),
+
+        "Ocorrências"
+    );
+
+    /* =====================================================
+    OCORRÊNCIA PARCEIRO
+    ===================================================== */
+
+    const occPartner =
+        group(
+            occurrence,
+            "PARCEIRO"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartOccPartner",
+        "bar",
+
+        occPartner.map(
+            x => x[0]
+        ),
+
+        occPartner.map(
+            x => x[1]
+        ),
+
+        "Ocorrências"
+    );
+
+    /* =====================================================
+    RISCO CIDADE
+    ===================================================== */
+
+    const cityRisk =
+        group(
+            critical,
+            "CIDADE"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartCityRisk",
+        "bar",
+
+        cityRisk.map(
+            x => x[0]
+        ),
+
+        cityRisk.map(
+            x => x[1]
+        ),
+
+        "Críticos"
+    );
+
+    /* =====================================================
+    RISCO PARCEIRO
+    ===================================================== */
+
+    const partnerRisk =
+        entityScore(
+            rows,
+            "PARCEIRO"
+        )
+        .slice(0,12);
+
+    createChart(
+        "chartPartnerRisk",
+        "bar",
+
+        partnerRisk.map(
+            x => x.name
+        ),
+
+        partnerRisk.map(
+            x => x.score
+        ),
+
+        "Score"
+    );
+
+    /* =====================================================
+    VALOR EM RISCO
+    ===================================================== */
+
+    const riskByStatus =
+        group(
+            critical,
+            "STATUS",
+            r =>
+                numberValue(
+                    value(
+                        r,
+                        "NF_VALOR"
+                    )
+                )
+        );
+
+    createChart(
+        "chartRiskValue",
+        "bar",
+
+        riskByStatus.map(
+            x => x[0]
+        ),
+
+        riskByStatus.map(
+            x => x[1]
+        ),
+
+        "Valor em risco"
+    );
+
+    /* =====================================================
+    EVOLUÇÃO POR DATA PREVISTA
+    ===================================================== */
+
+    const dateMap = {};
+
+    rows.forEach(
+        r => {
+
+            const key =
+                dateKey(
+                    value(
+                        r,
+                        "DATA_PREVISTA"
+                    )
+                );
+
+            if(!key){
+                return;
+            }
+
+            dateMap[key] =
+                (
+                    dateMap[key] || 0
+                ) + 1;
+
+        }
+    );
+
+    const evolution =
+        Object.entries(
+            dateMap
+        )
+        .slice(-20);
+
+    createChart(
+        "chartEvolution",
+        "line",
+
+        evolution.map(
+            x => x[0]
+        ),
+
+        evolution.map(
+            x => x[1]
+        ),
+
+        "Registros"
+    );
+
+    /* =====================================================
+    EVOLUÇÃO SLA
+    ===================================================== */
+
+    const dateGroups = {};
+
+    rows.forEach(
+        r => {
+
+            const key =
+                dateKey(
+                    value(
+                        r,
+                        "DATA_PREVISTA"
+                    )
+                );
+
+            if(!key){
+                return;
+            }
+
+            if(!dateGroups[key]){
+                dateGroups[key] = [];
+            }
+
+            dateGroups[key].push(r);
+
+        }
+    );
+
+    const slaEvolution =
+        Object.entries(
+            dateGroups
+        )
+        .slice(-20)
+        .map(
+            ([date,list]) => ({
+
+                date,
+
+                sla:
+                    calculateSLA(
+                        list
+                    )
+
+            })
+        );
+
+    createChart(
+        "chartSLAEvolution",
+        "line",
+
+        slaEvolution.map(
+            x => x.date
+        ),
+
+        slaEvolution.map(
+            x => x.sla
+        ),
+
+        "SLA %",
+
+        {
+
+            scales:{
+
+                y:{
+
+                    min:0,
+
+                    max:100,
+
+                    ticks:{
+                        callback:
+                            v =>
+                                v + "%"
+                    }
+
+                }
+
+            }
+
+        }
+    );
+
+    /* =====================================================
+    RANKINGS
+    ===================================================== */
+
+    renderPartnerTable(
+        rows
+    );
+
+    renderFocus(
+        rows
+    );
+
+    renderEntityTable(
+        partnerRisk,
+        drivers
+    );
+
+    /* =====================================================
+    RISK LIST
+    ===================================================== */
+
+    const topRisk =
+        [...rows]
+        .sort(
+            (a,b) =>
+                riskScore(b) -
+                riskScore(a)
+        )
+        .slice(0,20);
+
+    $("priorityList").innerHTML =
+        topRisk.length
+        ?
+        topRisk
+            .map(
+                riskHTML
+            )
+            .join("")
+        :
+        `<div class="empty">
+            Nenhum risco encontrado.
+        </div>`;
+
+    $("riskList").innerHTML =
+        topRisk.length
+        ?
+        topRisk
+            .map(
+                riskHTML
+            )
+            .join("")
+        :
+        `<div class="empty">
+            Nenhum risco encontrado.
+        </div>`;
+
+    /* =====================================================
+    TABELA
+    ===================================================== */
+
+    renderTable(
+        rows
+    );
+
+}
+
+/* =========================================================
+FIND COLUMN
+========================================================= */
+
+function findColumnIndex(field){
+
+    const aliases =
+        HEADER_ALIASES[field] ||
+        [];
+
+    for(
+        const alias of aliases
+    ){
+
+        const key =
+            headerKey(alias);
+
+        if(
+            HEADER_MAP[key]
+            !==
+            undefined
+        ){
+
+            return HEADER_MAP[key];
+
+        }
+
+    }
+
+    return -1;
+}
+
+/* =========================================================
+LEITURA PLANILHA
+========================================================= */
+
+$("file").addEventListener(
+    "change",
+    async function(event){
+
+        const file =
+            event.target.files[0];
+
+        if(!file){
+            return;
+        }
+
+        try{
+
+            DATA = [];
+
+            HEADERS = [];
+
+            HEADER_MAP = {};
+
+            $("diag").innerHTML = "";
+
+            setProgress(5);
+
+            log(
+                "Arquivo selecionado: " +
+                file.name
+            );
+
+            $("live").textContent =
+                "● LENDO PLANILHA...";
+
+            $("live").style.color =
+                "var(--yellow)";
+
+            if(!window.XLSX){
+
+                throw new Error(
+                    "Biblioteca XLSX não carregada."
+                );
+
+            }
+
+            const buffer =
+                await file.arrayBuffer();
+
+            setProgress(20);
+
+            const workbook =
+                XLSX.read(
+                    buffer,
+                    {
+                        type:"array",
+                        cellDates:false
+                    }
+                );
+
+            log(
+                "Abas encontradas: " +
+                workbook.SheetNames.join(
+                    " | "
+                ),
+                "ok"
+            );
+
+            let sheetName =
+                workbook.SheetNames.find(
+                    name =>
+                        normalize(name) ===
+                        normalize(
+                            "DELLY'S GERAL"
+                        )
+                );
+
+            if(!sheetName){
+
+                sheetName =
+                    workbook.SheetNames.find(
+                        name =>
+                            normalize(name)
+                            .includes(
+                                "DELLY"
+                            )
+                    );
+
+            }
+
+            if(!sheetName){
+
+                throw new Error(
+                    "A aba DELLY'S GERAL não foi encontrada."
+                );
+
+            }
+
+            log(
+                "Aba utilizada: " +
+                sheetName,
+                "ok"
+            );
+
+            setProgress(40);
+
+            const sheet =
+                workbook.Sheets[
+                    sheetName
+                ];
+
+            const matrix =
+                XLSX.utils.sheet_to_json(
+                    sheet,
+                    {
+                        header:1,
+                        defval:"",
+                        raw:false
+                    }
+                );
+
+            if(
+                !matrix.length ||
+                matrix.length < 2
+            ){
+
+                throw new Error(
+                    "A planilha não possui dados suficientes."
+                );
+
+            }
+
+            const MAX_COLUMNS = 24;
+
+            HEADERS =
+                matrix[0]
+                .slice(
+                    0,
+                    MAX_COLUMNS
+                )
+                .map(
+                    h => text(h)
+                );
+
+            HEADERS.forEach(
+                (header,index) => {
+
+                    const key =
+                        headerKey(
+                            header
+                        );
+
+                    if(key){
+
+                        HEADER_MAP[key] =
+                            index;
+
+                    }
+
+                }
+            );
+
+            log(
+                "Colunas lidas de A até X: " +
+                HEADERS.length,
+                "ok"
+            );
+
+            FIELDS.forEach(
+                field => {
+
+                    const index =
+                        findColumnIndex(
+                            field
+                        );
+
+                    if(index >= 0){
+
+                        log(
+                            field +
+                            " → " +
+                            HEADERS[index],
+                            "ok"
+                        );
+
+                    }
+
+                    else{
+
+                        log(
+                            field +
+                            " → CABEÇALHO NÃO ENCONTRADO",
+                            "warn"
+                        );
+
+                    }
+
+                }
+            );
+
+            if(
+                findColumnIndex(
+                    "STATUS"
+                ) < 0
+            ){
+
+                throw new Error(
+                    "A coluna STATUS não foi encontrada."
+                );
+
+            }
+
+            setProgress(60);
+
+            DATA =
+                matrix
+                .slice(1)
+                .map(
+                    (
+                        row,
+                        rowIndex
+                    ) => {
+
+                        const record = {};
+
+                        FIELDS.forEach(
+                            field => {
+
+                                const index =
+                                    findColumnIndex(
+                                        field
+                                    );
+
+                                record[field] =
+                                    index >= 0
+                                    ?
+                                    row[index] ?? ""
+                                    :
+                                    "";
+
+                            }
+                        );
+
+                        record._ROW =
+                            rowIndex + 2;
+
+                        return record;
+
+                    }
+                )
+                .filter(
+                    record => {
+
+                        const nf =
+                            text(
+                                record.NF_DOC
+                            );
+
+                        if(!nf){
+                            return false;
+                        }
+
+                        if(
+                            nf.startsWith(
+                                "#"
+                            )
+                        ){
+                            return false;
+                        }
+
+                        if(
+                            normalize(nf) ===
+                            "TOTAL"
+                        ){
+                            return false;
+                        }
+
+                        return true;
+
+                    }
+                );
+
+            setProgress(75);
+
+            log(
+                "Registros válidos: " +
+                DATA.length,
+                "ok"
+            );
+
+            const statusCount = {};
+
+            DATA.forEach(
+                row => {
+
+                    const s =
+                        getStatus(row);
+
+                    statusCount[s] =
+                        (
+                            statusCount[s] ||
+                            0
+                        ) + 1;
+
+                }
+            );
+
+            log(
+                "ENTREGUE: " +
+                (
+                    statusCount[
+                        "ENTREGUE"
+                    ] || 0
+                ),
+                "info"
+            );
+
+            log(
+                "ATRASADA: " +
+                (
+                    statusCount[
+                        "ATRASADA"
+                    ] || 0
+                ),
+                "info"
+            );
+
+            log(
+                "PASSOU DO PRAZO: " +
+                (
+                    statusCount[
+                        "PASSOU DO PRAZO"
+                    ] || 0
+                ),
+                "info"
+            );
+
+            log(
+                "PENDENTE: " +
+                (
+                    statusCount[
+                        "PENDENTE"
+                    ] || 0
+                ),
+                "info"
+            );
+
+            log(
+                "#VALOR! ignorados: " +
+                (
+                    (
+                        statusCount[
+                            "#VALOR!"
+                        ] || 0
+                    )
+                    +
+                    (
+                        statusCount[
+                            "#VALOR"
+                        ] || 0
+                    )
+                ),
+                "warn"
+            );
+
+            if(!DATA.length){
+
+                throw new Error(
+                    "Nenhum registro válido foi encontrado."
+                );
+
+            }
+
+            setOptions(
+                "fStatus",
+                "STATUS",
+                "Todos os status"
+            );
+
+            setOptions(
+                "fUF",
+                "UF",
+                "Todas as UFs"
+            );
+
+            setOptions(
+                "fPartner",
+                "PARCEIRO",
+                "Todos os parceiros"
+            );
+
+            setOptions(
+                "fDriver",
+                "MOTORISTA",
+                "Todos os motoristas"
+            );
+
+            setOptions(
+                "fCity",
+                "CIDADE",
+                "Todas as cidades"
+            );
+
+            setOptions(
+                "fDestination",
+                "DESTINO",
+                "Todos os destinos"
+            );
+
+            setOptions(
+                "fManifest",
+                "MANIFESTO",
+                "Todos os manifestos"
+            );
+
+            setProgress(90);
+
+            render();
+
+            setProgress(100);
+
+            $("live").textContent =
+                "● OPERAÇÃO ONLINE";
+
+            $("live").style.color =
+                "var(--green)";
+
+            log(
+                "DASHBOARD EXECUTIVO ATUALIZADO COM SUCESSO",
+                "ok"
+            );
+
+            log(
+                "TOTAL FINAL: " +
+                DATA.length +
+                " registros",
+                "ok"
+            );
+
+        }
+
+        catch(error){
+
+            console.error(
+                error
+            );
+
+            setProgress(0);
+
+            $("live").textContent =
+                "● ERRO NA LEITURA";
+
+            $("live").style.color =
+                "var(--red)";
+
+            log(
+                "ERRO: " +
+                error.message,
+                "err"
+            );
+
+        }
+
+    }
+);
+
+/* =========================================================
+FILTROS
+========================================================= */
+
+[
+    "search",
+    "fStatus",
+    "fUF",
+    "fPartner",
+    "fDriver",
+    "fCity",
+    "fDestination",
+    "fManifest"
+]
+.forEach(
+    id => {
+
+        const element =
+            $(id);
+
+        element.addEventListener(
+            id === "search"
+            ? "input"
+            : "change",
+            render
+        );
+
+    }
+);
+
+/* =========================================================
+LIMPAR FILTROS
+========================================================= */
+
+$("clearFilters")
+.addEventListener(
+    "click",
+    () => {
+
+        $("search").value = "";
+
+        [
+            "fStatus",
+            "fUF",
+            "fPartner",
+            "fDriver",
+            "fCity",
+            "fDestination",
+            "fManifest"
+        ]
+        .forEach(
+            id =>
+                $(id).value = ""
+        );
+
+        render();
+
+    }
+);
+
+/* =========================================================
+TELA CHEIA
+========================================================= */
+
+$("fullscreen")
+.addEventListener(
+    "click",
+    async () => {
+
+        try{
+
+            if(
+                !document.fullscreenElement
+            ){
+
+                await document
+                    .documentElement
+                    .requestFullscreen();
+
+            }
+
+            else{
+
+                await document
+                    .exitFullscreen();
+
+            }
+
+        }
+
+        catch(e){
+
+            console.log(e);
+
+        }
+
+    }
+);
+
+/* =========================================================
+NAVEGAÇÃO
+========================================================= */
+
+document
+.querySelectorAll(".nav")
+.forEach(
+    nav => {
+
+        nav.addEventListener(
+            "click",
+            function(){
+
+                document
+                .querySelectorAll(
+                    ".nav"
+                )
+                .forEach(
+                    item =>
+                        item.classList
+                            .remove(
+                                "active"
+                            )
+                );
+
+                document
+                .querySelectorAll(
+                    ".section"
+                )
+                .forEach(
+                    item =>
+                        item.classList
+                            .remove(
+                                "active"
+                            )
+                );
+
+                nav.classList.add(
+                    "active"
+                );
+
+                const page =
+                    nav.dataset.page;
+
+                $(page)
+                    .classList
+                    .add(
+                        "active"
+                    );
+
+                $("pageTitle")
+                    .textContent =
+                        nav.textContent
+                        .replace(
+                            /^[^ ]+\s*/,
+                            ""
+                        )
+                        .trim();
+
+            }
+        );
+
+    }
+);
+
+/* =========================================================
+INICIALIZAÇÃO
+========================================================= */
+
+render();
+
+log(
+    "Dashboard Control Tower Executive iniciado."
+);
+
+log(
+    "Aguardando seleção da planilha."
+);
+
+log(
+    "Leitura limitada às colunas A até X."
+);
+
+log(
+    "SLA = Entregues / operações válidas."
+);
+
+log(
+    "Meta SLA configurada em 95%."
+);
+
+log(
+    "#VALOR! não entra no cálculo de SLA."
+);
+
+log(
+    "Filtros executivos habilitados."
+);
+
+</script>
+
+</body>
+</html>
